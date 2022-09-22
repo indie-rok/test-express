@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <title>Document</title>
+</head>
+
+<body>
+
+    <ul id="name-container">
+        </div>
+
+        <h3>Add name</h3>
+        <form onsubmit="createName()">
+            <input type="text" id="name" />
+            <input type="submit" />
+        </form>
+
+        <script>
+            fetch(`${window.location.origin}/names`).then(r => r.json()).then(names => {
+                const container = document.getElementById('name-container')
+
+                names.forEach(({ name }) => {
+                    const el = document.createElement('li')
+                    el.innerText = name
+                    container.appendChild(el)
+                })
+            })
+
+            async function createName() {
+                event.preventDefault()
+                const name = document.getElementById('name').value
+                // Default options are marked with *
+                const response = await fetch(`${window.location.origin}/names`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                });
+
+                location.reload()
+
+            }
+        </script>
+
+</body>
+
+</html>
