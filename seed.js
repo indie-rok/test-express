@@ -1,5 +1,7 @@
 const { Pool } = require('pg')
 
+require('dotenv').config()
+
 const pool = new Pool()
 
 pool.query('CREATE TABLE names (id SERIAL, name VARCHAR(100))', (err, res) => {
